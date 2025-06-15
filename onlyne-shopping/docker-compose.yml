@@ -1,0 +1,71 @@
+version: '3.9'
+
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - product_services
+      - order_services
+      - payment_services
+
+  product-service:
+    build: ./product_services
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./servicio_productos/.env
+    depends_on:
+      - bd_productos
+
+bd_productos:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: productos
+    volumes:
+      - product-db-data:/var/lib/postgresql/data
+
+  order-service:
+    build: ./order-services
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./order-services/.env
+    depends_on:
+      - bd_pedidos
+
+
+  order-db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: order
+    volumes:
+      - order-db-data:/var/lib/postgresql/data
+
+  payment-service:
+    build: ./payment-services
+    ports:
+      - "3003:3003"
+    environment:
+      - ./payment/.env
+    depends_on:
+      - payment-db
+
+  payment-db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: payments
+    volumes:
+      - payment-db-data:/var/lib/postgresql/data
+
+volumes:
+  product-db-data:
+  order-db-data:
+  payment-db-data:
