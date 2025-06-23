@@ -1,0 +1,20 @@
+# Framework web
+fastapi==0.111.0
+uvicorn==0.30.0
+
+# Base de datos
+SQLAlchemy==2.0.30
+psycopg2-binary==2.9.9  # Usa mysqlclient==2.2.4 si es MySQL
+
+# Pydantic para validación
+pydantic==2.7.1
+
+# Para testing
+pytest==8.2.2
+httpx==0.27.0
+
+# Opcional para migraciones
+alembic==1.13.1
+
+# Opcional para entorno
+python-dotenv==1.0.1
