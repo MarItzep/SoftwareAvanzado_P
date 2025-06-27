@@ -1,58 +1,56 @@
-# Guía de Configuración del Proyecto
+# SA_P_VJ
+# Sistema de Compras en Línea - Microservicios con Docker y PostgreSQL
 
-## Crear Entorno Virtual
+Este proyecto representa la migración de un sistema monolítico de compras en línea a una arquitectura basada en microservicios.
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+## Servicios implementados
 
-## Instalación de Dependencias
+- `gateway`: Punto de entrada al sistema
+- `servicio_productos`: Gestión de productos
+- `servicio_pedidos`: Gestión de pedidos
+- `servicio_pagos`: Gestión de pagos
+- Bases de datos PostgreSQL para cada microservicio
 
-```bash
-pip install -r requirements.txt
-```
+## Requisitos
 
-## Configuración de Base de Datos
+- Docker
+- Docker Compose
 
-### Credenciales por defecto:
-- **Usuario:** `postgres`
-- **Contraseña:** `admin`
-- **URL de conexión:** `postgresql://postgres:admin@localhost:5432/cmdb_db`
+## Despliegue local
 
-### Variable de entorno:
-```bash
-export DATABASE_URL="postgresql://postgres:admin@localhost:5432/cmdb_db"
-```
-
-## Preparación de la Base de Datos
-
-### Crear base de datos (si no existe):
-```bash
-createdb cmdb_db
-```
-
-### Cargar datos de ejemplo:
-```bash
-python scripts/data.py
-```
-
-## Ejecutar el Servidor
+### 1. Clonar el repositorio
 
 ```bash
-uvicorn app.main:app --reload
+git clone https://github.com/tu-usuario/online-shopping-system.git
+cd online-shopping-system
 ```
 
-## Ejecutar Tests Unitarios
+## Configuración .env
+DB_HOST=bd_servicio
+DB_USER=postgres
+DB_PASSWORD=admin
+DB_NAME=ordenar
 
+## construccion y levantamiento de los contenedores
+docker-compose up --build
+
+## prueba de servicios
 ```bash
-pytest
+## gateway
+http://localhost:80 
+
+http://localhost:3001/productos
+
+http://localhost:3002/pedidos
+
+http://localhost:3003/pagos
 ```
 
----
 
-### Notas Adicionales
+## Detener servicios 
+docker-compose down
+### eliminar volumenes 
+docker-compose down -v
 
-- Asegúrate de tener PostgreSQL instalado y ejecutándose
-- El servidor se ejecutará por defecto en `http://localhost:8000`
-- El flag `--reload` permite recarga automática durante el desarrollo
+## reconstrucción servicios 
+docker-compose build product_services
