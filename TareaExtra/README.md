@@ -1,4 +1,5 @@
-# Manual de Sistema de Autenticación - Vibe Coding
+# Manual de Sistema de Autenticación - Vibe Coding - Se utilizo CURSOR
+![alt text](image.png)
 
 ## 📋 Tabla de Contenidos
 1. [Descripción General](#-descripción-general)
